@@ -49,7 +49,7 @@ namespace Become_A_Developer_2024_View
 
 				string longestIncreasingSequence = FindLongestIncreasingSequence(numbers);
 				string longestOutcreasingSequence = FindLongestOutcreasingSequence(numbers);
-				
+
 				double avarageNum = FindAvarege(numbers);
 				double median = FindMedian(numbers);
 
@@ -74,10 +74,10 @@ namespace Become_A_Developer_2024_View
 		private double FindAvarege(int[] numbers)
 		{
 			int sum = 0;
-			foreach(int num in numbers)
+			foreach (int num in numbers)
 				sum += num;
 
-			return (double) sum / numbers.Length;
+			return (double)sum / numbers.Length;
 		}
 		private double FindMedian(int[] numbers)
 		{
@@ -100,7 +100,7 @@ namespace Become_A_Developer_2024_View
 		}
 		private string FindLongestOutcreasingSequence(int[] numbers)
 		{
-			string longestOutcreasingSequence = null;
+			string longestOutcreasingSequence = "[";
 			int maxLength = 1;
 			int currentLength = 1;
 			int startIndex = 0;
@@ -125,6 +125,11 @@ namespace Become_A_Developer_2024_View
 			}
 			for (int i = 0; i < maxLength; i++)
 			{
+				if (i == (maxLength - 1))
+				{
+					longestOutcreasingSequence += numbers[maxLengthIndex + i] + "]";
+					break;
+				}
 				longestOutcreasingSequence += numbers[maxLengthIndex + i] + ", ";
 			}
 
@@ -132,33 +137,38 @@ namespace Become_A_Developer_2024_View
 		}
 		private string FindLongestIncreasingSequence(int[] numbers)
 		{
-			string longestIncreasingSequence = null;
+			string longestIncreasingSequence = "[";
 			int maxLength = 1;
 			int currentLength = 1;
 			int startIndex = 0;
 			int maxLengthIndex = 0;
 
-			
-				for (int i = 1; i < numbers.Length; i++)
+
+			for (int i = 1; i < numbers.Length; i++)
+			{
+				if (numbers[i] > numbers[i - 1])
 				{
-					if (numbers[i] > numbers[i - 1])
+					currentLength++;
+					if (currentLength > maxLength)
 					{
-						currentLength++;
-						if (currentLength > maxLength)
-						{
-							maxLength = currentLength;
-							maxLengthIndex = startIndex;
-						}
-					}
-					else
-					{
-						currentLength = 1;
-						startIndex = i;
+						maxLength = currentLength;
+						maxLengthIndex = startIndex;
 					}
 				}
+				else
+				{
+					currentLength = 1;
+					startIndex = i;
+				}
+			}
 
 			for (int i = 0; i < maxLength; i++)
 			{
+				if (i == (maxLength - 1))
+				{
+					longestIncreasingSequence += numbers[maxLengthIndex + i] + "]";
+					break;
+				}
 				longestIncreasingSequence += numbers[maxLengthIndex + i] + ", ";
 			}
 
