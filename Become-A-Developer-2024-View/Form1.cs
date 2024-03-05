@@ -47,8 +47,8 @@ namespace Become_A_Developer_2024_View
 
 				int[] numbers = Array.ConvertAll(File.ReadAllLines(filePath), int.Parse);
 
-				string longestIncreasingSequence = FindLongestIncreasingSequence(numbers);
-				string longestOutcreasingSequence = FindLongestOutcreasingSequence(numbers);
+				string longestIncreasingSequence = FindLongestSequence(numbers, true);
+				string longestOutcreasingSequence = FindLongestSequence(numbers, false);
 
 				double avarageNum = FindAvarege(numbers);
 				double median = FindMedian(numbers);
@@ -98,9 +98,9 @@ namespace Become_A_Developer_2024_View
 
 			return median;
 		}
-		private string FindLongestOutcreasingSequence(int[] numbers)
+		private string FindLongestSequence(int[] numbers, bool increasing)
 		{
-			string longestOutcreasingSequence = "[";
+			string longestSequence = "[";
 			int maxLength = 1;
 			int currentLength = 1;
 			int startIndex = 0;
@@ -108,45 +108,7 @@ namespace Become_A_Developer_2024_View
 
 			for (int i = 1; i < numbers.Length; i++)
 			{
-				if (numbers[i] < numbers[i - 1])
-				{
-					currentLength++;
-					if (currentLength > maxLength)
-					{
-						maxLength = currentLength;
-						maxLengthIndex = startIndex;
-					}
-				}
-				else
-				{
-					currentLength = 1;
-					startIndex = i;
-				}
-			}
-			for (int i = 0; i < maxLength; i++)
-			{
-				if (i == (maxLength - 1))
-				{
-					longestOutcreasingSequence += numbers[maxLengthIndex + i] + "]";
-					break;
-				}
-				longestOutcreasingSequence += numbers[maxLengthIndex + i] + ", ";
-			}
-
-			return longestOutcreasingSequence;
-		}
-		private string FindLongestIncreasingSequence(int[] numbers)
-		{
-			string longestIncreasingSequence = "[";
-			int maxLength = 1;
-			int currentLength = 1;
-			int startIndex = 0;
-			int maxLengthIndex = 0;
-
-
-			for (int i = 1; i < numbers.Length; i++)
-			{
-				if (numbers[i] > numbers[i - 1])
+				if ((increasing && numbers[i] > numbers[i - 1]) || (!increasing && numbers[i] < numbers[i - 1]))
 				{
 					currentLength++;
 					if (currentLength > maxLength)
@@ -166,13 +128,13 @@ namespace Become_A_Developer_2024_View
 			{
 				if (i == (maxLength - 1))
 				{
-					longestIncreasingSequence += numbers[maxLengthIndex + i] + "]";
+					longestSequence += numbers[maxLengthIndex + i] + "]";
 					break;
 				}
-				longestIncreasingSequence += numbers[maxLengthIndex + i] + ", ";
+				longestSequence += numbers[maxLengthIndex + i] + ", ";
 			}
 
-			return longestIncreasingSequence;
+			return longestSequence;
 		}
 	}
 }
